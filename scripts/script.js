@@ -14,25 +14,38 @@ function parseToString(file, diseases){
             let region = res[1].split(';').join('').split(/(?:,| )+/).join('').split(':');
             let year = res[2].split(';').join('').split(/(?:,| )+/).join('').split(':');
             let params = res[4].split(';').filter(c => c.length != 0).slice(1, 4);
-
+            let diseasesObjects = {};
 
             diseases.forEach((element, i) => {
                 let s = res.filter(v => v.search(element) != -1).join('').split(';').filter(v => v.length != 0);
                 let index = s.indexOf(element);
                 let paramsValues = s.slice(index + 1, index + 4);
                 let disease = {};
-                disease['name'] = element;
                 params.forEach((key, i) => disease[key] = paramsValues[i]);
-           
-       
-                console.log(disease);
+                diseasesObjects[element] = disease;
             });
 
             object[region[0]] = region[1].split('\r')[0];
             object[year[0]] = year[1].split('\r')[0];
-            console.log(object);
+            object['diseases'] = diseasesObjects;
+            createJSON(file, object);
+
+
+        
         }
     });
 }
 
-parseToString('GHE2015_DAILY.csv');
+
+function createJSON(file, sampleObject){
+    fs.writeFile("../data/json/" + file.split('.csv').join('') + '.json', JSON.stringify(sampleObject), (err) => {
+        if (err) {
+            console.error(err);
+            return;
+        };
+        console.log("File has been created");
+    });
+}
+parseToString('GHE2015_DALY.csv');
+
+parseToString('GHE2016_DALY.csv');
