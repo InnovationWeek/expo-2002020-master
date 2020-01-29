@@ -9,6 +9,22 @@
 
 body {
     overflow: hidden;
+    margin-bottom: 10%;
+}
+
+h1 {
+    color: #fff;
+    font-size: 3rem;
+    position: absolute;
+}
+
+.legend-header {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    text-align: center;
+    padding: 5px 2px;
 }
 
 .legend,
@@ -34,18 +50,18 @@ body {
     background-image: url('/img/bodies.png');
     background-size: contain;
     width: 100%;
-    height: 900px;
+    height: 700px;
     position: absolute;
     background-repeat: no-repeat;
     background-position: 25% 20%;
 }
 
 #container :nth-child(1) {
-    top: 10%;
+    top: 7%;
 }
 
 #container :nth-child(3) {
-    top: 90%;
+    top: 60%;
 }
 
 li {
@@ -66,9 +82,23 @@ li:hover {
     margin-left: 5%;
     position: absolute;
     z-index: 2;
+    top: 0% !important;
     display: flex;
     flex-wrap: wrap;
 }
+
+.select-opt li:first-child:hover {
+    background-color: #fff;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.select-opt li:last-child:hover {
+    background-color: #fff;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
 
 .select-opt :first-child {
     border-right: 2px solid #fff;
@@ -84,7 +114,7 @@ li:hover {
 }
 
 #opt-disease {
-    padding: 15% 0 5% 0;
+    padding: 0 0 5% 0;
 }
 
 #opt-disease::before {
@@ -99,6 +129,8 @@ li:hover {
     width: 5rem;
     /* Also needed for space (tweak if needed) */
 }
+
+
 
 #opt-region {
     padding: 5% 0 10% 0;
@@ -155,6 +187,6 @@ li:hover {
     width: 100%;
     position: absolute;
     z-index: 5;
-    top: 50%;
+    margin-top: 10%;
     color: #fff;
 }
