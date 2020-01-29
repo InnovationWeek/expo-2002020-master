@@ -1,0 +1,17 @@
+{
+    "male": {
+        "Syphilis": ["mouth", "penis", "left-hand", "right-hand", "left-foot", "right-foot", "brain", "left-armpit", "right-armpit", "left-groinfold", "right-groinfold", "neck"],
+        "Chlamydia": ["belly", "penis"],
+        "Gonorrhoea": ["belly", "penis"],
+        "Genital herpes": ["penis"],
+        "HIV/AIDS": ["left-lung", "right-lung", "mouth", "belly", "penis"] 
+    },
+
+    "female": {
+        "Syphilis": ["mouth", "vagina", "left-hand", "right-hand", "left-foot", "right-foot", "left-armpit", "left-groinfold", "right-groinfold", "right-armpit", "groinfold", "neck", "brain"],
+        "Chlamydia": ["belly", "vagina"],
+        "Gonorrhoea": ["belly", "vagina"],
+        "Genital herpes": ["vagina"],
+        "HIV/AIDS": ["left-lung", "right-lung", "mouth", "belly", "vagina"] 
+    }
+}
