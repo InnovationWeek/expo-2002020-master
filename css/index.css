@@ -1,4 +1,4 @@
-*{
+* {
     box-sizing: border-box;
     text-transform: uppercase;
     font-family: 'Montserrat', sans-serif;
@@ -7,21 +7,38 @@
     margin: 0;
 }
 
-body{
+body {
     overflow: hidden;
+    margin-bottom: 10%;
 }
 
-.legend, .select-opt{
+h1 {
+    color: #fff;
+    font-size: 3rem;
+    position: absolute;
+}
+
+.legend-header {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #fff;
+    border-radius: 25px;
+    text-align: center;
+    padding: 5px 2px;
+}
+
+.legend,
+.select-opt {
     border: 2px solid #fff;
     border-radius: 25px;
     background-color: #000;
 }
 
-.select-opt:hover{
+.select-opt:hover {
     border-radius: 25px;
 }
 
-.legend{
+.legend {
     width: 20%;
     left: 70%;
     position: absolute;
@@ -29,39 +46,39 @@ body{
     color: #fff;
 }
 
-#container{
+#container {
     background-image: url('/img/bodies.png');
     background-size: contain;
     width: 100%;
-    height: 900px;
+    height: 700px;
     position: absolute;
     background-repeat: no-repeat;
     background-position: 25% 20%;
 }
 
-#container :nth-child(1){
-    top: 10%;
+#container :nth-child(1) {
+    top: 7%;
 }
 
-#container :nth-child(3){
+#container :nth-child(3) {
     top: 60%;
 }
 
-li{
+li {
     text-decoration: none;
     list-style: none;
     padding: 5px;
     cursor: pointer;
 }
 
-li:hover{
+li:hover {
     background-color: #fff;
     color: #000000;
     font-weight: 800;
 }
 
-.select-opt{
-    width:90%;
+.select-opt {
+    width: 90%;
     margin-left: 5%;
     position: absolute;
     z-index: 2;
@@ -70,56 +87,76 @@ li:hover{
     flex-wrap: wrap;
 }
 
-.select-opt :first-child{
+.select-opt li:first-child:hover {
+    background-color: #fff;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+}
+
+.select-opt li:last-child:hover {
+    background-color: #fff;
+    border-bottom-right-radius: 20px;
+    border-top-right-radius: 20px;
+}
+
+
+.select-opt :first-child {
     border-right: 2px solid #fff;
 }
 
-#opt-year :nth-child(3){
+#opt-year :nth-child(3) {
     border-left: 2px solid #fff;
 }
 
-.select-opt li{
+.select-opt li {
     text-align: center;
     padding: 3%;
 }
 
-#opt-disease{
-    padding: 15% 0 5% 0;
+#opt-disease {
+    padding: 0 0 5% 0;
 }
 
 #opt-disease::before {
-  content: "\2022";  /* Add content: \2022 is the CSS Code/unicode for a bullet */
-  color: red; /* Change the color */
-  font-weight: bold; /* If you want it to be bold */
-  display: inline-block; /* Needed to add space between the bullet and the text */
-  width: 5rem; /* Also needed for space (tweak if needed) */
+    content: "\2022";
+    /* Add content: \2022 is the CSS Code/unicode for a bullet */
+    color: red;
+    /* Change the color */
+    font-weight: bold;
+    /* If you want it to be bold */
+    display: inline-block;
+    /* Needed to add space between the bullet and the text */
+    width: 5rem;
+    /* Also needed for space (tweak if needed) */
 }
 
-#opt-region{
+
+
+#opt-region {
     padding: 5% 0 10% 0;
 }
 
-#opt-gender{
+#opt-gender {
     top: 5% !important;
 }
 
-#opt-gender li{
+#opt-gender li {
     width: 50%;
 }
 
-#opt-year{
+#opt-year {
     top: 92% !important;
 }
 
-#opt-year li{
-    width:33.33%;
+#opt-year li {
+    width: 33.33%;
 }
 
-.mult-opt li{
+.mult-opt li {
     padding: 10px 50px;
 }
 
-#slider-container{
+#slider-container {
     width: 20%;
     position: absolute;
     top: 50%;
@@ -127,7 +164,7 @@ li:hover{
     display: flex;
 }
 
-#slider{
+#slider {
     width: 80%;
     border: none;
     border-radius: 0px;
@@ -135,18 +172,18 @@ li:hover{
     margin-top: 2%;
 }
 
-#slider span{
+#slider span {
     border-radius: 50px;
     margin-top: -2%;
 }
 
-#slider-container p{
+#slider-container p {
     width: 10%;
     text-align: center;
     color: #fff;
 }
 
-#amount p{
+#amount p {
     width: 100%;
     position: absolute;
     z-index: 5;
