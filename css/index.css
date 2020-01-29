@@ -29,6 +29,16 @@ body{
     color: #fff;
 }
 
+#container{
+    background-image: url('/img/bodies.png');
+    background-size: contain;
+    width: 100%;
+    height: 900px;
+    position: absolute;
+    background-repeat: no-repeat;
+    background-position: 25% 20%;
+}
+
 #container :nth-child(1){
     top: 10%;
 }
