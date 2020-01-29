@@ -1,10 +1,6 @@
 const fs = require('fs');
 const path = require('path');
 
-
-// TO DO: per regio een json file met daarin de jaren en per jaar de ziekte en aantal getroffen
-// mensen van die ziekte per geslacht. Plus de leeftijden.
-
 function parseToString(file, diseases){
     let filePath = '../data/csv/' + file;
     let result;
@@ -66,7 +62,6 @@ function createJSON(file, sampleObject){
     });
 }
 
-// Example parses csv file to json object and creates a json file
 
 const files = fs.readdirSync('../data/csv/');
 files.forEach(parseToString);
