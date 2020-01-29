@@ -31,11 +31,11 @@ body {
 }
 
 #container :nth-child(1) {
-    top: 10%;
+    top: 40%;
 }
 
 #container :nth-child(3) {
-    top: 60%;
+    top: 90%;
 }
 
 li {
@@ -56,7 +56,6 @@ li:hover {
     margin-left: 5%;
     position: absolute;
     z-index: 2;
-    top: 0% !important;
     display: flex;
     flex-wrap: wrap;
 }
@@ -69,25 +68,13 @@ li:hover {
     border-left: 2px solid #fff;
 }
 
-.select-opt :first-child:hover {
-    background-color: #fff;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
-}
-
-.select-opt :last-child:hover {
-    background-color: #fff;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
-}
-
 .select-opt li {
     text-align: center;
     padding: 3%;
 }
 
 #opt-disease {
-    padding: 5% 0 5% 0;
+    padding: 15% 0 5% 0;
 }
 
 #opt-disease::before {
@@ -99,17 +86,8 @@ li:hover {
     /* If you want it to be bold */
     display: inline-block;
     /* Needed to add space between the bullet and the text */
-    size: 5rem;
+    width: 5rem;
     /* Also needed for space (tweak if needed) */
-}
-
-
-#opt-disease :last-child::before {
-    content: "\2022";
-    color: rgb(39, 38, 38);
-    font-weight: bold;
-    display: inline-block;
-    size: 500rem;
 }
 
 #opt-region {
@@ -117,15 +95,11 @@ li:hover {
 }
 
 #opt-gender {
-    top: -5% !important;
+    top: 5% !important;
 }
 
 #opt-gender li {
     width: 50%;
-}
-
-#opt-gender:active {
-    border-radius: 0px;
 }
 
 #opt-year {
@@ -171,6 +145,6 @@ li:hover {
     width: 100%;
     position: absolute;
     z-index: 5;
-    margin-top: 10%;
+    top: 50%;
     color: #fff;
 }
