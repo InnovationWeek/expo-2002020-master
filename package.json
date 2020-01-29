@@ -2,7 +2,7 @@
   "name": "expo-2002020-master",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/server/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/InnovationWeek/expo-2002020-master/issues"
   },
-  "homepage": "https://github.com/InnovationWeek/expo-2002020-master#readme"
+  "homepage": "https://github.com/InnovationWeek/expo-2002020-master#readme",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "fs": "0.0.1-security",
+    "jquery": "^3.4.1",
+    "xmlhttprequest": "^1.8.0"
+  }
 }
