@@ -22,32 +22,23 @@ function setup() {
   createCanvas(1920, 1080);
   colorMode(HSB, 360, 100, 100, 100);
   background(0);
-  drawPeople();
   translate(700, 600);
   //drawFractal(0, 0, 300);
   //drawBubbles();
-  //drawLegend();
-  var len = 100;
-  for(var i = 0; i < 4; i++){
-    rotate(PI/2);
-    len-=5;
-    fractalLines(len, PI/4);
-  }
+  // var len = 100;
+  // for(var i = 0; i < 4; i++){
+  //   rotate(PI/2);
+  //   len-=5;
+  //   fractalLines(len, PI/4);
+  // }
+   loadJSON('./data/json/GHE2016_DALY.json', getData);
 }
 
 function draw() {
 }
 
-function drawPeople(){
-
-}
-
-function drawLegend(){
-  var rad = 30;
-  fill(0);
-  stroke(200);
-  rect(width-700, 100, width/4, 400, rad, rad, rad, rad);
-  rect(width-680, 80, width/4-40, 50, rad, rad, rad, rad);
+function getData(data){
+  console.log(data);
 }
 
 function drawFractal(x, y, d){
@@ -100,5 +91,22 @@ function fractalLines(len, angle){
     rotate(-angle);
     fractalLines(len*0.67, angle);
     pop();
+  }
+
+  function particleSystem(){
+    class particle {
+      constructor() {
+        this.pos = createVector(width/3, height/2),
+        this.vel = random(-2, 2),
+        this.acc = random(0, 0.05)
+      }
+
+      update(){
+        this.position.add(this.vel);
+        this.velocity.add(this.acc)
+      }
+      
+
+    }
   }
 }
