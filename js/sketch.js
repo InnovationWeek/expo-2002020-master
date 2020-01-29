@@ -1,21 +1,35 @@
-$(function(){
+$(function () {
   $('#slider').slider({
     range: "max",
     min: 0,
     max: 7,
     value: 2,
-    slide: function( event, ui ) {
+    slide: function (event, ui) {
       console.log(ui.value);
-      if(ui.value == 0){
+      if (ui.value == 0) {
         $('#amount').empty().append(`<p>Selected age: ${ui.value}</p>`)
-      }else if(ui.value == 7){
+      } else if (ui.value == 7) {
         $('#amount').empty().append(`<p>Selected age: 70+</p>`)
-      }else{
+      } else {
         $('#amount').empty().append(`<p>Selected age: ${ui.value}0</p>`)
       }
     }
   });
-  $( "#amount" ).val( $( "#slider-range-max" ).slider( "value" ) );
+  $("#amount").val($("#slider-range-max").slider("value"));
+  
+
+$('#opt-year li').click(function () {
+  console.log($(this).text())
+  if ($(this).text() == "2016") {
+    loadJSON('./data/json/GHE2016_DALY.json', getSixtData);
+  }else if ($(this).text() == "2015"){
+    loadJSON('./data/json/GHE2015_DALY.json', getFiftData);
+  }else if($(this).text() == "2010"){
+    loadJSON('.data/json/GHE2010_DALY.json', getTenthData);
+  }
+})
+
+$('')
 })
 
 function setup() {
@@ -31,24 +45,32 @@ function setup() {
   //   len-=5;
   //   fractalLines(len, PI/4);
   // }
-   loadJSON('./data/json/GHE2016_DALY.json', getData);
 }
 
 function draw() {
+
 }
 
-function getData(data){
-  console.log(data);
+function getSixtData(sixtData) {
+  console.log(sixtData);
 }
 
-function drawFractal(x, y, d){
+function getFiftData(fifthData){
+  console.log(fifthData);
+}
+
+function getTenthData(tenthData){
+  console.log(tenthData);
+}
+
+function drawFractal(x, y, d) {
   stroke(0, 100, 100, 30);
   noFill();
   circle(x, y, d);
-  if(d > 10){
-    drawFractal(x+d, y, d/2);
-    drawFractal(x-d, y, d/2);
-    drawFractal(x, y+d, d/2);
+  if (d > 10) {
+    drawFractal(x + d, y, d / 2);
+    drawFractal(x - d, y, d / 2);
+    drawFractal(x, y + d, d / 2);
   }
 }
 
@@ -56,21 +78,21 @@ function drawBubbles(len) {
   noFill();
   stroke(255, 255, 255, 50);
   strokeWeight(1);
-  ellipse(0, -len, -len-20, -len-20);
+  ellipse(0, -len, -len - 20, -len - 20);
   translate(0, -len);
-  if (len > 10){
+  if (len > 10) {
     push();
     rotate(angle);
-    drawBubble(len*0.67);
+    drawBubble(len * 0.67);
     pop();
     push();
     rotate(-angle);
-    drawBubbles(len*0.67);
+    drawBubbles(len * 0.67);
     pop();
   }
 }
 
-function fractalLines(len, angle){
+function fractalLines(len, angle) {
   stroke(250, 100, 100, 50);
   line(0, 0, 0, len);
   //Verplaats de 'origin' van de tekening naar 0 op de x-as en de meegegeven waarde aan het argument lengte van de lijn (len, dit is dus het eindpunt op de y-as van deze lijn) op de y-as
@@ -84,29 +106,27 @@ function fractalLines(len, angle){
     //Roteer origin (richting van de tekening) in klokwijzerzin
     rotate(angle);
     //Teken deze functie opnieuw met een afwijking van 0.67 in de lengte
-    fractalLines(len*0.67, angle);
+    fractalLines(len * 0.67, angle);
     //Vraag de vorige origin-locatie op uit het geheugen en bewaar dit punt opnieuw
     pop();
     push();
     rotate(-angle);
-    fractalLines(len*0.67, angle);
+    fractalLines(len * 0.67, angle);
     pop();
   }
+}
 
-  function particleSystem(){
-    class particle {
-      constructor() {
-        this.pos = createVector(width/3, height/2),
+function particleSystem() {
+  class particle {
+    constructor() {
+      this.pos = createVector(width / 3, height / 2),
         this.vel = random(-2, 2),
         this.acc = random(0, 0.05)
-      }
+    }
 
-      update(){
-        this.position.add(this.vel);
-        this.velocity.add(this.acc)
-      }
-      
-
+    update() {
+      this.position.add(this.vel);
+      this.velocity.add(this.acc)
     }
   }
 }
