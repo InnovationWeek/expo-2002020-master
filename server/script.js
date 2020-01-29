@@ -50,7 +50,6 @@ function parseToString(file, diseases){
             object[region[0]] = region[1].split('\r')[0];
             object[year[0]] = year[1].split('\r')[0];
             object['diseases'] = diseasesObjects;
-            console.log(object);
            createJSON(file, object);
         }
     });
@@ -63,12 +62,11 @@ function createJSON(file, sampleObject){
             console.error(err);
             return;
         };
-        console.log("File has been created");
+        console.log(file + " has been converted to JSON");
     });
 }
 
 // Example parses csv file to json object and creates a json file
 
-parseToString('GHE2010_DALY.csv');
-parseToString('GHE2015_DALY.csv');
-parseToString('GHE2016_DALY.csv');
+const files = fs.readdirSync('../data/csv/');
+files.forEach(parseToString);
