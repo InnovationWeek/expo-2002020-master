@@ -90,6 +90,10 @@ function draw() {
     system.addParticle();
     system.run();
   }
+
+  // Author: Tischa
+  // In deze functie een functie plaatsen die door de particles lijst gaat loopen en kijken
+  // naar de omvang van de aantal getroffen mensen.
 }
 
 function windowResized() {
@@ -235,5 +239,4 @@ function getDiseaseLocations(locations) {
     console.log("organ adding as system", locations.female[organOfSelected], organOfSelected);
     addSystem(locations.female[organOfSelected]);
   });
-
 };
