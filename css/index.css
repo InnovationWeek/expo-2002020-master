@@ -12,10 +12,46 @@ body {
     margin-bottom: 10%;
 }
 
+@keyframes moveWelcome {
+    0%{
+        transform: translateX(0%);
+    }
+    100%{
+        transform: translateX(100%);
+    }
+}
+
+#welcome{
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    position: absolute;
+    z-index: 9999;
+    color: white;
+    text-align: center;
+    transform: translateX(0%);
+    animation: moveWelcome 2s 6s ease-in-out;
+    animation-fill-mode: both;
+}
+
+#welcome h2{
+    width: 50%;
+    margin: 20% 0 0 25%;
+    font-size: 2rem;
+    text-transform: none;
+}
+
+#welcome h3{
+    text-transform: none;
+    margin-top: 20px;
+    font-size: 1.5rem;
+}
+
 h1 {
     color: #fff;
     font-size: 3rem;
     position: absolute;
+    text-align: center;
 }
 
 .legend-header {
@@ -44,7 +80,7 @@ h1 {
 
 .legend {
     width: 20%;
-    left: 70%;
+    left: 75%;
     position: absolute;
     z-index: 1;
     color: #fff;
@@ -57,7 +93,7 @@ h1 {
     height: 700px;
     position: absolute;
     background-repeat: no-repeat;
-    background-position: 25% 20%;
+    background-position: 25% 20px;
 }
 
 #container :nth-child(1) {
@@ -134,7 +170,11 @@ li:hover {
     /* Also needed for space (tweak if needed) */
 }
 
-
+.selected-opt{
+    background-color: #fff;
+    color: #000;
+    font-weight: 800;
+}
 
 #opt-region {
     padding: 5% 0 10% 0;
@@ -164,12 +204,12 @@ li:hover {
     width: 20%;
     position: absolute;
     top: 50%;
-    left: 70%;
+    left: 75%;
     display: flex;
 }
 
 #slider {
-    width: 80%;
+    width: 70%;
     border: none;
     border-radius: 0px;
     height: 1px;
@@ -182,7 +222,7 @@ li:hover {
 }
 
 #slider-container p {
-    width: 10%;
+    width: 15%;
     text-align: center;
     color: #fff;
 }
