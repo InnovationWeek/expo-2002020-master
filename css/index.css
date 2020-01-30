@@ -100,6 +100,15 @@ h1 {
     top: 60%;
 }
 
+.bullet {
+    height: 15px;
+    width: 15px;
+    border: 3px solid yellow;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 10px;
+}
+
 li {
     text-decoration: none;
     list-style: none;
