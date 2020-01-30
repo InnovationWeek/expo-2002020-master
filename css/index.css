@@ -129,6 +129,7 @@ li:hover {
     border-top-left-radius: 20px;
 }
 
+
 .select-opt li:last-child:hover {
     background-color: #fff;
     border-bottom-right-radius: 20px;
@@ -138,10 +139,12 @@ li:hover {
 
 .select-opt :first-child {
     border-right: 2px solid #fff;
+    border-radius: 25px 0 0 25px;
 }
 
 #opt-year :nth-child(3) {
     border-left: 2px solid #fff;
+    border-radius: 0 25px 25px 0;
 }
 
 .select-opt li {
