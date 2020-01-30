@@ -8,7 +8,7 @@
     },
 
     "female": {
-        "Syphilis": ["mouth", "vagina", "left-hand", "right-hand", "left-foot", "right-foot", "left-armpit", "left-groinfold", "right-groinfold", "right-armpit", "groinfold", "neck", "brain"],
+        "Syphilis": ["mouth", "vagina", "left-hand", "right-hand", "left-foot", "right-foot", "left-armpit", "left-groinfold", "right-groinfold", "right-armpit", "neck", "brain"],
         "Chlamydia": ["belly", "vagina"],
         "Gonorrhoea": ["belly", "vagina"],
         "Genital herpes": ["vagina"],
