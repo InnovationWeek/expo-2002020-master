@@ -87,6 +87,10 @@ function draw() {
       particles.splice(i, 1);
       }
   }
+
+  // Author: Tischa
+  // In deze functie een functie plaatsen die door de particles lijst gaat loopen en kijken
+  // naar de omvang van de aantal getroffen mensen.
 }
 
 function windowResized() {
@@ -278,9 +282,9 @@ function fractalLines(len, angle) {
 }
 
 function particleSystem() {
-  class particle {
+  class Particle {
     constructor() {
-      this.pos = createVector(width / 3, height / 2),
+        this.pos = createVector(width / 3, height / 2),
         this.vel = createVector(random(-2, 2)),
         this.acc = createVector(random(0, 0.05))
     }
