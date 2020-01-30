@@ -23,14 +23,18 @@
 </head>
 
 <body>
+  <div id="welcome">
+    <h2>This interactive visualization represents the amount of people infected by Sexually Transmitted Diseases</h2>
+    <h3>Including the infected organs in the body and categorized by age, continent and year</h3>
+  </div>
   <div id="container">
     <!-- <h1>Header 1</h1> -->
     <div class="legend">
       <h3 class="legend-header">Diseases</h3>
       <ul class="mult-opt" id="opt-disease">
-        <li>Syphilis</li>
+        <li class="selected-opt">Syphilis</li>
         <li>Chlamydia</li>
-        <li>Gonorrhea</li>
+        <li>Gonorrhoea</li>
         <li>Genital herpes</li>
         <li>HIV/AIDS</li>
       </ul>
@@ -38,16 +42,16 @@
 
     <div id="slider-container">
       <div id="amount">
-        <p>Selected age:</p>
+        <p>Selected age: 0-28 days</p>
       </div>
       <p>0</p>
       <div id="slider"></div>
-      <p>70</p>
+      <p>70+</p>
     </div>
 
     <div class="legend">
       <ul class="mult-opt" id="opt-region">
-        <li>America</li>
+        <li class="selected-opt">America</li>
         <li>Western Pacific</li>
         <li>Africa</li>
         <li>Europe</li>
@@ -56,7 +60,7 @@
       </ul>
 
       <ul class="select-opt" id="opt-year">
-        <li>2010</li>
+        <li class="selected-opt">2010</li>
         <li>2015</li>
         <li>2016</li>
       </ul>
