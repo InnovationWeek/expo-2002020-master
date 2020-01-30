@@ -166,19 +166,6 @@ li:hover {
     padding: 0 0 5% 0;
 }
 
-#opt-disease::before {
-    content: "\2022";
-    /* Add content: \2022 is the CSS Code/unicode for a bullet */
-    color: red;
-    /* Change the color */
-    font-weight: bold;
-    /* If you want it to be bold */
-    display: inline-block;
-    /* Needed to add space between the bullet and the text */
-    width: 5rem;
-    /* Also needed for space (tweak if needed) */
-}
-
 .selected-opt {
     background-color: #fff;
     color: #000;
@@ -228,6 +215,11 @@ li:hover {
 #slider span {
     border-radius: 50px;
     margin-top: -2%;
+    cursor: grab;
+}
+
+#slider span:active {
+    cursor: grabbing;
 }
 
 #slider-container p {
