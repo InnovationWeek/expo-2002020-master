@@ -7,6 +7,8 @@ let selectedAge = "0-28 days";
 let maleObj = {};
 let femaleObj = {};
 
+var particleSystems = [];
+
 $(function () {
   //Initalizeren slider, min and max values en standaard value
   $('#slider').slider({
@@ -36,6 +38,7 @@ $(function () {
 
       $('#amount').empty().append(`<p>Selected age: ${selectedAge}</p>`)
       fileChecker();
+      particleSystems = [];
     }
   });
 
@@ -44,18 +47,23 @@ $(function () {
     $(this).addClass('selected-opt').siblings().removeClass('selected-opt');
     selectedYear = $(this).text();
     fileChecker();
+    particleSystems = [];
+
   })
 
   $('#opt-disease li').click(function () {
     $(this).addClass('selected-opt').siblings().removeClass('selected-opt');
     selectedDisease = $(this).text();
     fileChecker();
+    particleSystems = [];
+
   });
 
   $('#opt-region li').click(function () {
     $(this).addClass('selected-opt').siblings().removeClass('selected-opt');
     selectedContinent = $(this).text();
     fileChecker();
+    particleSystems = [];
   });
 
 })
@@ -64,28 +72,23 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
   background(0);
-  var len = 100;
-  translate(width / 3, height / 3);
-  for (var i = 0; i < 4; i++) {
-    rotate(PI / 2);
-    len -= 5;
-    fractalLines(len, PI / 4);
-  }
+
+  // var len = 100;
+  // translate(width / 3, height / 3);
+  // for (var i = 0; i < 4; i++) {
+  //   rotate(PI / 2);
+  //   len -= 5;
+  //   fractalLines(len, PI / 4);
+  // }
+
+  fileChecker();
 }
 
 function draw() {
   background(0);
-  for (let i = 0; i < 5; i++) {
-      let p = new Particle();
-      particles.push(p);
-  }
-  for (let i = particles.length - 1; i >= 0; i--) {
-      particles[i].update();
-      particles[i].show();
-      if (particles[i].isDead()) {
-      // remove this particle
-      particles.splice(i, 1);
-      }
+  for (let system of particleSystems) {
+    system.addParticle();
+    system.run();
   }
 }
 
@@ -93,38 +96,88 @@ function windowResized() {
   resizeCanvas(windowWidth, windowHeight);
 }
 
-class Particle {
-  constructor() {
-      this.position = createVector(windowWidth/2, windowHeight/2);
-      this.velocity = createVector(random(-1, 1), random(-5, -2));
-      //this.acceleration = createVector(0, 0.05);
-      this.acceleration = createVector(0, random(0.05, 0.2));
-      this.alpha = 100;
+/*--------------------------------------------
+-------------------PARTICLES------------------
+---------------------------------------------*/
 
-      //steering
-      this.target = createVector(x, y);
-      this.maxspeed = 3;    // Maximum speed
-      this.maxforce = 0.05; // Maximum steering force
+
+class Particle {
+  constructor(xLoc, yLoc) {
+    this.position = createVector(parseInt(xLoc - 95), parseInt(yLoc + 20));
+    this.velocity = createVector(random(-1, 1), random(-1, 1));
+    this.acceleration = createVector(-0.001, 0.001);
+    this.alpha = 100;
+
+    // //steering
+    // this.target = createVector(x, y);
+    // this.maxspeed = 3;    // Maximum speed
+    // this.maxforce = 0.05; // Maximum steering force
   }
 
   isDead() {
-      return this.alpha < 0;
+    return this.alpha < 0;
   }
 
   update() {
-      this.velocity.add(this.acceleration);
-      this.position.add(this.velocity);
-      this.alpha -= 1;
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.alpha -= 5;
   }
 
   show() {
-      noStroke();
-      //stroke(255);
-      fill(0, 100, 100, this.alpha);
-      ellipse(this.position.x, this.position.y, 16);
+    noFill();
+    //stroke(255);
+    let hue;
+
+    if (selectedDisease == "Syphilis") {
+      hue = 65;
+    } else if (selectedDisease == "Chlamydia") {
+      hue = 35;
+    } else if (selectedDisease == "Gonorrhoea") {
+      hue = 0;
+    } else if (selectedDisease == "Genital herpes") {
+      hue = 250;
+    } else {
+      hue = 325;
+    }
+
+    stroke(hue, 100, 100, this.alpha);
+    let rad = 10;
+      ellipse(this.position.x, this.position.y, rad / 2, rad / 2);
   }
 }
 
+class Particlesystem {
+  constructor(amount, originX, originY) {
+    this.origin = createVector(originX, originY)
+    this.particles = [];
+  }
+
+  addParticle(amount = 5) {
+    for (let i = 0; i < amount; i++) {
+      let p = new Particle(this.origin.x, this.origin.y);
+      this.particles.push(p);
+    }
+  }
+
+  run() {
+    for (let i = this.particles.length - 1; i >= 0; i--) {
+      this.particles[i].update();
+      this.particles[i].show();
+      if (this.particles[i].isDead()) {
+        // remove this particle
+        this.particles.splice(i, 1);
+      }
+    }
+  }
+}
+
+function addSystem(loc) {
+  console.log("add System", loc)
+  let amount = 5
+  let newSystem = new Particlesystem(amount, parseInt(loc.x), parseInt(loc.y));
+  particleSystems.push(newSystem);
+}
 
 /*--------------------------------------------
 ----------OPHALEN EN BIJHOUDEN DATA-----------
@@ -175,119 +228,12 @@ function getDiseaseLocations(locations) {
   femaleObj.organsLoc = [];
   maleObj.organs.forEach(function (organOfSelected) {
     maleObj.organsLoc.push(locations.male[organOfSelected]);
+    addSystem(locations.male[organOfSelected]);
   });
   femaleObj.organs.forEach(function (organOfSelected) {
     femaleObj.organsLoc.push(locations.female[organOfSelected]);
+    console.log("organ adding as system", locations.female[organOfSelected], organOfSelected);
+    addSystem(locations.female[organOfSelected]);
   });
-  //Teken een punt op de meest recente geselecteerde locatie
-  drawDot();
+
 };
-
-function drawDot() {
-  let hue, op;
-  background(0)
-  noFill();
-  strokeWeight(2)
-
-  //Check de geselecteerde ziekte en pas kleur aan
-  if (selectedDisease == "Syphilis") {
-    hue = 65;
-  } else if (selectedDisease == "Chlamydia") {
-    hue = 35;
-  } else if (selectedDisease == "Gonorrhoea") {
-    hue = 0;
-  } else if (selectedDisease == "Genital herpes") {
-    hue = 250;
-  } else {
-    hue = 325;
-  }
-
-  //Check de geselecteerde leeftijd en pas opacity aan
-  //Is dit wel nodig als we de amount van particles aanpassen en zo het verschil in leeftijd weergeven?
-  // if (selectedAge == "0-28 days") {
-  //   op = 10;
-  // } else if (selectedAge == "1-59 months") {
-  //   op = 20;
-  // } else if (selectedAge == "5-14 years") {
-  //   op = 35;
-  // } else if (selectedAge == "15-29 years") {
-  //   op = 45;
-  // } else if (selectedAge == "30-49 years") {
-  //   op = 60;
-  // } else if (selectedAge == "50-59 years") {
-  //   op = 75;
-  // } else if (selectedAge == "60-69 years") {
-  //   op = 85;
-  // } else {
-  //   op = 100;
-  // }
-
-  stroke(hue, 100, 100, op);
-
-  for (let organLoc of maleObj.organsLoc) {
-    setShape(organLoc);
-  }
-  for (let organLoc of femaleObj.organsLoc) {
-    setShape(organLoc);
-  }
-
-  function setShape(organLoc){
-    //Waarden aanpassen aangezien onze JSON file niet helemaal de juiste locaties bevat
-    organLoc.x = organLoc.x - 95;
-    if (selectedContinent == "America") {
-      square(organLoc.x, organLoc.y, 10);
-    } else if (selectedContinent == "Western Pacific") {
-      quad(organLoc.x-5, organLoc.y, organLoc.x, organLoc.y-5, organLoc.x+5, organLoc.y, organLoc.x, organLoc.y+5);
-    } else if (selectedContinent == "Africa") {
-      rect(organLoc.x, organLoc.y, 10, 1);
-    } else if (selectedContinent == "Europe") {
-      rect(organLoc.x, organLoc.y, 1, 10);
-    } else if (selectedContinent == "Southeast Asia") {
-      triangle(organLoc.x-5, organLoc.y-5, organLoc.x+5, organLoc.y-5, organLoc.x, organLoc.y);
-    } else {
-      ellipse(organLoc.x, organLoc.y, 10, 10);
-    }
-  }
-}
-
-/*--------------------------------------------
-----------------CREATIVE CODE-----------------
----------------------------------------------*/
-function fractalLines(len, angle) {
-  stroke(250, 100, 100, 20);
-  line(0, 0, 0, len);
-  //Verplaats de 'origin' van de tekening naar 0 op de x-as en de meegegeven waarde aan het argument lengte van de lijn (len, dit is dus het eindpunt op de y-as van deze lijn) op de y-as
-  translate(0, len);
-  //Blijf loopen/lijnen tekenen totdat de lengte (len) van de lijn kleiner is dan 4
-  //Voor het effect van de vertakkingen die kleiner zijn dan de vorige vertakkingen
-  //If statement schrijven we om een recursieve functie te stoppen, anders resulteert deze in een endless loop
-  if (len > 4) {
-    //Bewaar het huidige nulpunt (origin) in het geheugen van het programma
-    push();
-    //Roteer origin (richting van de tekening) in klokwijzerzin
-    rotate(angle);
-    //Teken deze functie opnieuw met een afwijking van 0.67 in de lengte
-    fractalLines(len * 0.67, angle);
-    //Vraag de vorige origin-locatie op uit het geheugen en bewaar dit punt opnieuw
-    pop();
-    push();
-    rotate(-angle);
-    fractalLines(len * 0.67, angle);
-    pop();
-  }
-}
-
-function particleSystem() {
-  class particle {
-    constructor() {
-      this.pos = createVector(width / 3, height / 2),
-        this.vel = createVector(random(-2, 2)),
-        this.acc = createVector(random(0, 0.05))
-    }
-
-    update() {
-      this.position.add(this.vel);
-      this.velocity.add(this.acc)
-    }
-  }
-}
