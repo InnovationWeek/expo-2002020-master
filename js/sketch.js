@@ -2,7 +2,7 @@
 let selectedYear = "2010";
 let selectedContinent = "America";
 let selectedDisease = "Syphilis";
-let selectedAge = "0-28 days";
+let selectedAge = "30-49 years";
 
 let maleObj = {};
 let femaleObj = {};
@@ -15,7 +15,7 @@ $(function () {
     range: "max",
     min: 0,
     max: 7,
-    value: 0,
+    value: 4,
     //Pas de gewenste values aan naar onze data
     slide: function (event, ui) {
       if (ui.value == 0) {
@@ -48,7 +48,6 @@ $(function () {
     selectedYear = $(this).text();
     fileChecker();
     particleSystems = [];
-
   })
 
   $('#opt-disease li').click(function () {
@@ -56,7 +55,6 @@ $(function () {
     selectedDisease = $(this).text();
     fileChecker();
     particleSystems = [];
-
   });
 
   $('#opt-region li').click(function () {
@@ -72,15 +70,6 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   colorMode(HSB, 360, 100, 100, 100);
   background(0);
-
-  // var len = 100;
-  // translate(width / 3, height / 3);
-  // for (var i = 0; i < 4; i++) {
-  //   rotate(PI / 2);
-  //   len -= 5;
-  //   fractalLines(len, PI / 4);
-  // }
-
   fileChecker();
 }
 
@@ -89,33 +78,27 @@ function draw() {
   for (let system of particleSystems) {
     system.addParticle();
     system.run();
+    }
   }
 
-  // Author: Tischa
-  // In deze functie een functie plaatsen die door de particles lijst gaat loopen en kijken
-  // naar de omvang van de aantal getroffen mensen.
-}
-
 function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+  resizeCanvas(windowWidth, windowHeight, WEBGL);
 }
 
 /*--------------------------------------------
 -------------------PARTICLES------------------
 ---------------------------------------------*/
-
+let movePosX = 0;
+let movePosY = 0;
 
 class Particle {
-  constructor(xLoc, yLoc) {
+  constructor(amount, xLoc, yLoc) {
     this.position = createVector(parseInt(xLoc - 95), parseInt(yLoc + 20));
     this.velocity = createVector(random(-1, 1), random(-1, 1));
-    this.acceleration = createVector(-0.001, 0.001);
+    this.velocity.mult(.3);
+    this.acceleration = createVector(-0.000001, 0.000001);
     this.alpha = 100;
-
-    // //steering
-    // this.target = createVector(x, y);
-    // this.maxspeed = 3;    // Maximum speed
-    // this.maxforce = 0.05; // Maximum steering force
+    this.amount = amount;
   }
 
   isDead() {
@@ -125,12 +108,18 @@ class Particle {
   update() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
-    this.alpha -= 5;
+    if(this.amount >20){
+      this.alpha -= this.amount/20;
+      //De hoeveelheden zijn te groot bij chalmydia, dus deze moeten eerder sterven
+    }else{
+      this.alpha -= this.amount/50;
+    }
+    // this.position.x+=cos(radians(this.position.y+this.position.x));
+    // this.position.y+=sin(radians(this.position.y+this.position.x));
   }
 
   show() {
     noFill();
-    //stroke(255);
     let hue;
 
     if (selectedDisease == "Syphilis") {
@@ -140,27 +129,37 @@ class Particle {
     } else if (selectedDisease == "Gonorrhoea") {
       hue = 0;
     } else if (selectedDisease == "Genital herpes") {
-      hue = 250;
+      hue = 180;
     } else {
       hue = 325;
     }
 
-    stroke(hue, 100, 100, this.alpha);
-    let rad = 10;
-      ellipse(this.position.x, this.position.y, rad / 2, rad / 2);
+    //stroke(hue, 100, 100, this.alpha);
+    //point(this.position.x, this.position.y);
+    noStroke();
+fill(hue, 100, 100, this.alpha)
+let rad = 5;
+     ellipse(this.position.x, this.position.y, rad, rad);
   }
 }
 
 class Particlesystem {
-  constructor(amount, originX, originY) {
+  constructor(maxAmount, originX, originY) {
     this.origin = createVector(originX, originY)
     this.particles = [];
+    this.maxAmount = maxAmount;
+    this.totalPassed = 0;
   }
 
   addParticle(amount = 5) {
-    for (let i = 0; i < amount; i++) {
-      let p = new Particle(this.origin.x, this.origin.y);
-      this.particles.push(p);
+    //Check of het aantal gestorven particles kleiner is dan het totaal aantal gevraagde particles
+    //Indien ja, voeg een particle toe aan particlesystem
+    if (this.totalPassed < this.maxAmount) {
+      for (let i = 0; i < 100; i++) {
+        let p = new Particle(this.maxAmount, this.origin.x, this.origin.y);
+        this.particles.push(p);
+        this.totalPassed++;
+      }
     }
   }
 
@@ -176,10 +175,10 @@ class Particlesystem {
   }
 }
 
-function addSystem(loc) {
-  console.log("add System", loc)
-  let amount = 5
-  let newSystem = new Particlesystem(amount, parseInt(loc.x), parseInt(loc.y));
+function addSystem(amount, loc) {
+  let amountScalar = 100;
+  //Schaal amount aantal particles tot een kleiner aantal
+  let newSystem = new Particlesystem(parseInt(amount/amountScalar), parseInt(loc.x), parseInt(loc.y));
   particleSystems.push(newSystem);
 }
 
@@ -203,12 +202,6 @@ function fileChecker() {
     loadJSON('./data/json/EMR' + selectedYear + '.json', getAmount);
   }
   loadJSON('./data/json/diseases.json', getDiseaseOrgans);
-  console.log(selectedContinent)
-  console.log(selectedAge)
-  console.log(selectedYear)
-  console.log(selectedDisease)
-  console.log(maleObj)
-  console.log(femaleObj)
 }
 
 //Verkrijg de hoeveelheid personen die deze ziekte hebben ahv de gevraagde parameters
@@ -231,12 +224,10 @@ function getDiseaseLocations(locations) {
   maleObj.organsLoc = [];
   femaleObj.organsLoc = [];
   maleObj.organs.forEach(function (organOfSelected) {
-    maleObj.organsLoc.push(locations.male[organOfSelected]);
-    addSystem(locations.male[organOfSelected]);
+    addSystem(maleObj.amount.replace(".", ""), locations.male[organOfSelected]);
   });
   femaleObj.organs.forEach(function (organOfSelected) {
-    femaleObj.organsLoc.push(locations.female[organOfSelected]);
-    console.log("organ adding as system", locations.female[organOfSelected], organOfSelected);
-    addSystem(locations.female[organOfSelected]);
+    addSystem(femaleObj.amount.replace(".", ""), locations.female[organOfSelected]);
+    console.log("current amount:",femaleObj.amount.replace(".", "")) 
   });
 };
