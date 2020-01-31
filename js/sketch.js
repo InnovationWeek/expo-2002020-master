@@ -79,12 +79,15 @@ function draw() {
   for (let system of particleSystems) {
     system.addParticle();
     system.run();
-    }
   }
+<<<<<<< HEAD
 <<<<<<< HEAD
 }
 =======
 >>>>>>> 90669a0cad5886affdbb315829302d5ae2e8ef3d
+=======
+}
+>>>>>>> ac938b5a98a9373ef326f94b714c1861304ed712
 
 function windowResized() {
   resizeCanvas(windowWidth, windowHeight, WEBGL);
@@ -95,15 +98,22 @@ function windowResized() {
 ---------------------------------------------*/
 let movePosX = 0;
 let movePosY = 0;
+let xRot = 0.0;
+let yRot = 0.0;
+let rotVal = 100;
 
 class Particle {
+  //Creeër een particle op de locatie van het orgaan (verkregen uit de json file)
   constructor(amount, xLoc, yLoc) {
     this.position = createVector(parseInt(xLoc - 95), parseInt(yLoc + 20));
     this.velocity = createVector(random(-1, 1), random(-1, 1));
-    this.velocity.mult(.3);
+    //Multiply velocity om de animatie trager te laten gaan
+    this.velocity.mult(.8);
     this.acceleration = createVector(-0.000001, 0.000001);
+  //  this.acceleration = createVector(cos(xRot) / 100, sin(yRot) / 100);
     this.alpha = 100;
     this.amount = amount;
+
   }
 
   isDead() {
@@ -113,14 +123,14 @@ class Particle {
   update() {
     this.velocity.add(this.acceleration);
     this.position.add(this.velocity);
-    if(this.amount >20){
-      this.alpha -= this.amount/20;
-      //De hoeveelheden zijn te groot bij chalmydia, dus deze moeten eerder sterven
-    }else{
-      this.alpha -= this.amount/50;
-    }
-    // this.position.x+=cos(radians(this.position.y+this.position.x));
-    // this.position.y+=sin(radians(this.position.y+this.position.x));
+      this.alpha -= this.amount / 50;
+    //console.log(cos(xRot) / 1000);
+
+    //this.position.x+=cos(radians(this.position.y+this.position.x)*10);
+    //this.position.y+=sin(radians(this.position.y+this.position.x)*10);
+
+    // xRot += rotVal;
+    // yRot += rotVal;
   }
 
   show() {
@@ -142,9 +152,9 @@ class Particle {
     //stroke(hue, 100, 100, this.alpha);
     //point(this.position.x, this.position.y);
     noStroke();
-fill(hue, 100, 100, this.alpha)
-let rad = 5;
-     ellipse(this.position.x, this.position.y, rad, rad);
+    fill(hue, 100, 100, this.alpha)
+    let rad = 5;
+    ellipse(this.position.x, this.position.y, rad, rad);
   }
 }
 
@@ -183,7 +193,7 @@ class Particlesystem {
 function addSystem(amount, loc) {
   let amountScalar = 100;
   //Schaal amount aantal particles tot een kleiner aantal
-  let newSystem = new Particlesystem(parseInt(amount/amountScalar), parseInt(loc.x), parseInt(loc.y));
+  let newSystem = new Particlesystem(parseInt(amount / amountScalar), parseInt(loc.x), parseInt(loc.y));
   particleSystems.push(newSystem);
 }
 
@@ -220,7 +230,7 @@ function fileChecker() {
 }
 
 //Verkrijg de hoeveelheid personen die deze ziekte hebben ahv de gevraagde parameters
-//Sla deze data op in het female en male object om deze nadien te gebruiken voor de visualisatie
+//Sla deze data op in het female en male object om deze nadien te gebruiken voor de visualisatie//Extra calls te maken
 function getAmount(data) {
   maleObj.amount = data.diseases[selectedDisease].ages.male[selectedAge];
   femaleObj.amount = data.diseases[selectedDisease].ages.female[selectedAge];
@@ -240,11 +250,11 @@ function getDiseaseOrgans(organs) {
 function getDiseaseLocations(locations) {
   maleObj.organsLoc = [];
   femaleObj.organsLoc = [];
+  //Creeër een nieuw particlesystem met de verkregen locaties en aantal personen die de ziekte hebben, deze worden gebruikt om de visualisatie duidelijk te maken
   maleObj.organs.forEach(function (organOfSelected) {
     addSystem(maleObj.amount.replace(".", ""), locations.male[organOfSelected]);
   });
   femaleObj.organs.forEach(function (organOfSelected) {
     addSystem(femaleObj.amount.replace(".", ""), locations.female[organOfSelected]);
-    console.log("current amount:",femaleObj.amount.replace(".", "")) 
   });
 };
