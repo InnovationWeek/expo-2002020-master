@@ -117,7 +117,7 @@ li:nth-child(3) .bullet {
 }
 
 li:nth-child(4) .bullet {
-    border-color: rgb(0, 0, 255);
+    border-color:rgb(0, 255, 255);
 }
 
 li:nth-child(5) .bullet {
@@ -152,7 +152,7 @@ li.selected-opt:nth-child(3) .bullet {
 }
 
 li.selected-opt:nth-child(4) .bullet {
-    background-color: rgb(0, 0, 255);
+    background-color:rgb(0, 255, 255);
 }
 
 li.selected-opt:nth-child(5) .bullet {
