@@ -6,6 +6,7 @@ let selectedAge = "0-28 days";
 
 let maleObj = {};
 let femaleObj = {};
+let totalAmount;
 
 var particleSystems = [];
 
@@ -90,10 +91,6 @@ function draw() {
     system.addParticle();
     system.run();
   }
-
-  // Author: Tischa
-  // In deze functie een functie plaatsen die door de particles lijst gaat loopen en kijken
-  // naar de omvang van de aantal getroffen mensen.
 }
 
 function windowResized() {
@@ -203,6 +200,7 @@ function fileChecker() {
     loadJSON('./data/json/EMR' + selectedYear + '.json', getAmount);
   }
   loadJSON('./data/json/diseases.json', getDiseaseOrgans);
+
   console.log(selectedContinent)
   console.log(selectedAge)
   console.log(selectedYear)
@@ -216,6 +214,8 @@ function fileChecker() {
 function getAmount(data) {
   maleObj.amount = data.diseases[selectedDisease].ages.male[selectedAge];
   femaleObj.amount = data.diseases[selectedDisease].ages.female[selectedAge];
+  totalAmount = data.diseases[selectedDisease]["Both sexes"];
+  console.log(totalAmount);
 }
 
 //Haal de locatie op van de organen in het lichaam die aangetast worden door de geselecteerde ziekte
